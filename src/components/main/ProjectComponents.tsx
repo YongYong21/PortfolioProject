@@ -2,7 +2,10 @@
 import { css } from "@emotion/react";
 import { useState, useEffect, useRef } from "react";
 import ProjectContents from "./ProjectContents";
-
+const projectContainer = css`
+  height: 500vh;
+  background-color: #fdfdfd;
+`;
 const projectTitleContainer = (rotate: number, translate: number) => css`
   position: sticky;
   top: 0;
@@ -13,10 +16,12 @@ const projectTitleContainer = (rotate: number, translate: number) => css`
   justify-content: center;
 
   padding: 16px;
-
+  overflow: hidden;
   font-size: 128px;
 
   background-color: #fdfdfd;
+
+  margin-bottom: 500px;
 
   .letter1 {
     transform: rotate(${rotate}deg) translate(${translate}px, ${-translate}px);
@@ -90,7 +95,7 @@ function ProjectConponents(): JSX.Element {
   }, []);
 
   return (
-    <div css={{ height: 6000 }} ref={projectContainerRef}>
+    <div css={projectContainer} ref={projectContainerRef}>
       <div css={projectTitleContainer(rotate, translate)}>
         <span className="letter1">P</span>
         <span className="letter2">r</span>
