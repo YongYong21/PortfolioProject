@@ -2,10 +2,34 @@
 import { css } from "@emotion/react";
 import { useState, useRef } from "react";
 import emailjs from "@emailjs/browser";
+import { useEffect } from "react";
+const EmailTitleWrap = css`
+  padding-bottom: 8rem;
+  padding-top: 36px;
 
+  text-align: center;
+
+  font-size: 48px;
+  font-weight: 600;
+  line-height: 1.5;
+`;
+const formContainer = css`
+  height: 100vh;
+
+  padding: 16px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  opacity: 0;
+  transition: opacity 1s;
+
+  background-color: #fdfdfd;
+`;
 const formStyle = css`
-  max-width: 500px;
-  margin: 32px auto;
+  width: 500px;
 
   padding: 24px;
   border: 1px solid #ccc;
@@ -60,6 +84,7 @@ function EmailComponents() {
   const [message, setMessage] = useState<string>("");
 
   const formRef = useRef<HTMLFormElement | null>(null);
+  const formContainerRef = useRef<HTMLDivElement | null>(null);
 
   const sendEmail = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -89,35 +114,60 @@ function EmailComponents() {
         );
     }
   };
+  useEffect(() => {
+    const handleScroll = () => {
+      if (formContainerRef.current) {
+        if (
+          formContainerRef.current.getBoundingClientRect().top <=
+          window.innerHeight / 2
+        ) {
+          formContainerRef.current.style.opacity = "1";
+        }
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
   return (
-    <form ref={formRef} css={formStyle} onSubmit={sendEmail}>
-      <label>Name</label>
-      <input
-        type="text"
-        name="user_name"
-        placeholder="Name"
-        autoComplete="off"
-        onChange={(e) => setUserName(e.target.value)}
-      />
-      <label>Email</label>
-      <input
-        type="email"
-        name="user_email"
-        placeholder="Email"
-        autoComplete="off"
-        onChange={(e) => setUserEmail(e.target.value)}
-      />
-      <label>Message</label>
-      <textarea
-        name="message"
-        placeholder="Message"
-        onChange={(e) => setMessage(e.target.value)}
-      />
-      <br />
-      <div css={submitWrap}>
-        <input type="submit" value="Send" />
+    <div css={formContainer} ref={formContainerRef}>
+      <div css={EmailTitleWrap}>
+        <span>
+          If you have any questions, <br></br> Please feel free to contact me.
+          <br></br>
+        </span>
       </div>
-    </form>
+      <form ref={formRef} css={formStyle} onSubmit={sendEmail}>
+        <label>Name</label>
+        <input
+          type="text"
+          name="user_name"
+          placeholder="Name"
+          autoComplete="off"
+          onChange={(e) => setUserName(e.target.value)}
+        />
+        <label>Email</label>
+        <input
+          type="email"
+          name="user_email"
+          placeholder="Email"
+          autoComplete="off"
+          onChange={(e) => setUserEmail(e.target.value)}
+        />
+        <label>Message</label>
+        <textarea
+          name="message"
+          placeholder="Message"
+          onChange={(e) => setMessage(e.target.value)}
+        />
+        <br />
+        <div css={submitWrap}>
+          <input type="submit" value="Send" />
+        </div>
+      </form>
+    </div>
   );
 }
 
