@@ -8,7 +8,7 @@ const introduceContainer = css`
 
   background-color: rgba(0, 0, 0, 0.6);
   background-image: url(${IntroduceCardImg});
-  background-size: 100vw;
+  background-size: 100vw 100vh;
   background-repeat: no-repeat;
   background-blend-mode: multiply;
   background-attachment: fixed;
