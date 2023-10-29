@@ -47,10 +47,7 @@ function ProjectContents(): JSX.Element {
     const handleScroll = () => {
       if (ProjectContentsContainerRef.current && initialContainerTop) {
         const scrollPosition = window.scrollY;
-        console.log(
-          ProjectContentsContainerRef.current.getBoundingClientRect().top
-        );
-        console.log((window.innerHeight * 25) / 100);
+
         if (
           ProjectContentsContainerRef.current.getBoundingClientRect().top -
             0.5 <=
