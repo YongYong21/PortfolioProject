@@ -10,6 +10,9 @@ const AppContainer = css`
 `;
 
 function App(): JSX.Element {
+  window.addEventListener("beforeunload", () => {
+    window.scrollTo(0, 0); // (X, Y) 좌표를 (0, 0)으로 설정하여 맨 위로 이동
+  });
   return (
     <div css={AppContainer}>
       <IntroduceCard></IntroduceCard>
